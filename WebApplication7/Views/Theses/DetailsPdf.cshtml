@@ -1,0 +1,216 @@
+﻿@model WebApplication7.Models.Thesis
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+    h2{
+        font-size:50px;
+    }
+
+    p{
+        font-size:25px;
+    }
+
+    #table1{
+        margin-bottom:50px;
+        width: 100%;
+    }
+
+    #table1 td{
+        text-align: right;
+        width:50%;
+        padding-right:5px;
+    }
+    #table1 th{
+        width:50%
+    }
+    #table2{
+        margin-top:50px;
+        width: 100%
+    }
+    #table2 td{
+        text-align: center;
+        width: 33%;
+    }
+    #table2 th{
+        width: 33%;
+    }
+    th{
+        font-size:25px;
+    }
+    td{
+       font-size:25px;
+    }
+    #textdiv{
+        font-size:30px;
+        font-weight:bold;
+    }
+    
+
+</style>
+<h2>@Html.DisplayFor(model => model.Title)</h2>
+<p>@Html.DisplayFor(model => model.Description)</p>
+<div>
+    <hr />
+    <table id="table1">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.SupervisorId)</th>
+            <td>@Html.DisplayFor(model => model.SupervisorName)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Bachelor)</th>
+            <td>@Html.DisplayFor(model => model.Bachelor)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Master)</th>
+            <td>@Html.DisplayFor(model => model.Master)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Type)</th>
+            <td>@Html.DisplayFor(model => model.Type)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <td>@Html.DisplayFor(model => model.Status)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.StudentName)</th>
+            <td>@Html.DisplayFor(model => model.StudentName)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.StudentId)</th>
+            <td>@Html.DisplayFor(model => model.StudentId)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Programme)</th>
+            <td>@Html.DisplayFor(model => model.Programme)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Registration)</th>
+            <td>@Html.DisplayFor(model => model.Registration)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Filing)</th>
+            <td>@Html.DisplayFor(model => model.Filing)</td>
+        </tr>
+    </table>
+    <div id="textdiv">
+        <p>
+            @Html.DisplayNameFor(model => model.Summary):</br>
+            @Html.DisplayFor(model => model.Summary)
+        </p>
+        <p>
+            @Html.DisplayNameFor(model => model.Strenghts):</br>
+            @Html.DisplayFor(model => model.Strenghts)
+        </p>
+        <p>
+            @Html.DisplayNameFor(model => model.Weaknesses):</br>
+            @Html.DisplayFor(model => model.Weaknesses)
+        </p>
+        <p>
+            @Html.DisplayNameFor(model => model.Evaluation):</br>
+            @Html.DisplayFor(model => model.Evaluation)
+        </p>
+    </div>
+    <table id="table2" border="1">
+        <tr>
+            <th>Kategorie</th>
+            <th style="text-align: center">Bewertung </th>
+            <th style="text-align: center">Gewichtung</th>
+        </tr>
+        <tr>
+            <th>
+                Inhalt
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.ContentVal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ContentWt)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Layout
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.LayoutVal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.LayoutWt)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Struktur
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.StructureVal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.StrucutreWt)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Style
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.StyleVal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.StyleWt)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Literatur
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.LiteratureVal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.LiteratureWt)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Schwierigkeit
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.DifficultyVal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.DifficultyWt)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Novelty
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.NoveltyVal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NoveltyWt)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Reichhaltigkeit
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.RichnessVal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.RichnessWt)
+            </td>
+        </tr>
+    </table>
+    <p style="font-size:40px; padding-top:20px; text-align:right">
+        @Html.DisplayNameFor(model => model.Grade): @Html.DisplayFor(model => model.Grade)
+    </p>
+</div>
+

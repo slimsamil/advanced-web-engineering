@@ -1,0 +1,36 @@
+﻿@model IEnumerable<WebApplication7.Models.Programme>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Studiengänge</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;Neuen Studiengang hinzufügen</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="text-center" style="vertical-align: middle">
+                    <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@item.Id">Bearbeiten</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Löschen</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

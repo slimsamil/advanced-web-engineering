@@ -1,0 +1,107 @@
+﻿@model IEnumerable<WebApplication7.Models.Thesis>
+
+@{
+    ViewData["Title"] = "Public";
+}
+@section Scripts{
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <script>
+
+        function resetForm() {
+            document.getElementById("Search").value = null;
+            document.getElementById("Page").value = null;
+            document.getElementById("PageSize").value = null;
+            document.getElementById("Form").submit();
+        }
+    </script>
+}
+
+<h2>Hier finden Sie alle freien und reservierten Thesen.</h2>
+<p>Mit einem Klick auf die Titel der Thesen kriegen Sie mehr Informationen.</p>
+
+<form id="Form" asp-action="Public" method="get">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label">Suchen:</label>
+                    <input class="form-control" name="Search" id="Search" value="@ViewBag.Search" placeholder="" onchange="document.getElementById('Form').submit()">
+                </div>
+                <input type="button" value="Zurücksetzen" class="btn btn-default pull-right" onclick="resetForm()" style="margin-top:20px; margin-right:20px" />
+
+            </div>
+        </div>
+    </div>
+    
+        @foreach (var item in Model)
+        {
+            <script>email = item.Supervisor.EMail;</script>
+            
+            @if(item.Status == Status.Frei || item.Status == Status.Vorgemerkt){ 
+               
+            <div class="row">
+                <div class="panel panel-default" style="width=100%">
+                    <div class="panel-heading" style="width=100%">
+                        <div class="panel-title btn">
+                            <a data-toggle="collapse" data-target="#@Html.DisplayFor(modelItem => item.Id)">
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-collapse collapse" id="@Html.DisplayFor(modelItem => item.Id)">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @Html.DisplayNameFor(model => model.Description):<br />
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </div>
+                            <div class="form-group">
+                                @Html.DisplayNameFor(model => model.Status):
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </div>
+                            <div class="form-group">
+                                @Html.DisplayNameFor(model => model.SupervisorId):
+                                <a href="mailto:@Html.DisplayFor(modelItem => item.SupervisorEMail)">@Html.DisplayFor(modelItem => item.SupervisorName)</a> 
+
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        }else{
+
+            }
+    }
+        
+        <div class="panel-footer">
+            <div class="form-inline row">
+                <div class="col-xs-4">
+                    <div class="form-group pull-left">
+                        <span style="vertical-align: middle">Seite&nbsp;</span>
+                        <input name="Page" id="Page" type="number" value="@ViewBag.Page" class="form-control text-center" style="vertical-align: middle; width: 25%" onchange="document.getElementById('Form').submit()" />
+                        <span style="vertical-align: middle">&nbsp;von @ViewBag.PageTotal</span>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="text-center">
+                        <ul class="pagination" style="margin: 0">
+                            <li class="@(ViewBag.Page <= 1 ? "disabled" : null)"><a href="#" onclick="document.getElementById('Page').value = 1; document.getElementById('Form').submit()">Erste Seite</a></li>
+                            <li class="@(ViewBag.Page >= ViewBag.PageTotal ? "disabled" : null)"><a href="#" onclick="document.getElementById('Page').value = @ViewBag.PageTotal; document.getElementById('Form').submit()">Letzte Seite</a></li>
+                            <li class="@(ViewBag.Page >= ViewBag.PageTotal ? "disabled" : null)"><a href="#" onclick="document.getElementById('Page').value++; document.getElementById('Form').submit()">Weiter</a></li>
+                            <li class="@(ViewBag.Page <= 1 ? "disabled" : null)"><a href="#" onclick="document.getElementById('Page').value--; document.getElementById('Form').submit()">Zurück</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group pull-right">
+                        <span style="vertical-align: middle">Einträge pro Seite:&nbsp;</span>
+                        @Html.DropDownList("PageSize", new SelectList(new string[] { "5", "10", "20" }, ViewBag.PageSize), new { id = "PageSize", @class = "form-control", style = "vertical-align: middle", onchange = "document.getElementById('Form').submit()" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</form>

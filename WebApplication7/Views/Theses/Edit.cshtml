@@ -1,0 +1,394 @@
+﻿@model WebApplication7.Models.Thesis
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<script>
+    function Berechnen() {
+        var conval = document.getElementById("ContentValID").value;
+        var conwt = document.getElementById("ContentWtID").value;
+        var layoutval = document.getElementById("LayoutValID").value;
+        var layoutwt = document.getElementById("LayoutWtID").value;
+        var structval = document.getElementById("StructureValID").value;
+        var structwt = document.getElementById("StructureWtID").value;
+        var styleval = document.getElementById("StyleValID").value;
+        var stylewt = document.getElementById("StyleWtID").value;
+        var litval = document.getElementById("LiteratureValID").value;
+        var litwt = document.getElementById("LiteratureWtID").value;
+        var difval = document.getElementById("DifficultyValID").value;
+        var difwt = document.getElementById("DifficultyWtID").value;
+        var novval = document.getElementById("NoveltyValID").value;
+        var novwt = document.getElementById("NoveltyWtID").value;
+        var richval = document.getElementById("RichnessValID").value;
+        var richwt = document.getElementById("RichnessWtID").value;
+        document.getElementById("notenvorschlag").value = (conval * conwt + layoutval * layoutwt + structval * structwt + styleval * stylewt + litval * litwt + difval * difwt + novval * novwt + richval * richwt) / 100;
+    }
+</script>
+
+
+<h2>Bearbeiten</h2>
+
+<hr />
+<div class="row">
+    <form enctype="multipart/form-data" asp-controller="Theses" method = "post" asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input hidden asp-for="Id" />
+        <input hidden asp-for="PdfPath" />
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title btn">
+                        <a data-toggle="collapse" data-target="#Thema">Thema</a>
+                    </div>
+                </div>
+                <div class="panel-collapse collapse" id="Thema">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SupervisorId" class="control-label"></label>
+                            <select asp-for="SupervisorId" class="form-control" asp-items="ViewBag.SupervisorId"></select>
+                            <span asp-validation-for="SupervisorId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <b>Möglich für:</b></br>
+                                <label>
+                                    <input asp-for="Bachelor" /> @Html.DisplayNameFor(model => model.Bachelor)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Master" /> @Html.DisplayNameFor(model => model.Master)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title btn">
+                        <a data-toggle="collapse" data-target="#Bearbeitung">Bearbeitung</a>
+                    </div>
+                </div>
+                <div class="panel-collapse collapse" id="Bearbeitung">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            <select asp-for="Status" asp-items="@Html.GetEnumSelectList(typeof(Status))" class="form-control"></select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StudentName" class="control-label"></label>
+                            <input asp-for="StudentName" class="form-control" />
+                            <span asp-validation-for="StudentName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StudentId" class="control-label"></label>
+                            <input asp-for="StudentId" class="form-control" />
+                            <span asp-validation-for="StudentId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProgrammeId" class="control-label"></label>
+                            <select asp-for="ProgrammeId" class="form-control" asp-items="ViewBag.ProgrammeId"></select>
+                            <span asp-validation-for="ProgrammeId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Registration" class="control-label"></label>
+                            <input asp-for="Registration" class="form-control" id="date" style="float:right"  />
+                            <span asp-validation-for="Registration" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Filing" class="control-label"></label>
+                            <input asp-for="Filing" class="form-control" id="date2" style="float:right" />
+                            <span asp-validation-for="Filing" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Type" class="control-label"></label>
+                            <select asp-for="Type" asp-items="@Html.GetEnumSelectList(typeof(Typ))" class="form-control" ></select>
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <!--<div class="form-group">
+                <div class="col-md-6">
+                    <label asp-for="Pdf"></label>
+                <div class="col-md-6">
+                    <input asp-for="Pdf" class="form-control custom-file-label" />
+                    <label class="custom-file-label">Thesis Pdf auswählen...</label>
+                    <input type="submit" value="Upload" />
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">Hochladen</button>
+                    <a asp-controller="Theses" asp-action="Edit"
+                       class="btn btn-primary">Abbruch</a>
+                </div>
+            </div>
+        </div>-->
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title btn">
+                        <a data-toggle="collapse" data-target="#Bewertung">Bewertung</a>
+                    </div>
+                </div>
+                <div class="panel-collapse collapse" id="Bewertung">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="Summary" class="control-label"></label>
+                            <input asp-for="Summary" class="form-control" />
+                            <span asp-validation-for="Summary" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Strenghts" class="control-label"></label>
+                            <input asp-for="Strenghts" class="form-control" />
+                            <span asp-validation-for="Strenghts" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Weaknesses" class="control-label"></label>
+                            <input asp-for="Weaknesses" class="form-control" />
+                            <span asp-validation-for="Weaknesses" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Evaluation" class="control-label"></label>
+                            <input asp-for="Evaluation" class="form-control" />
+                            <span asp-validation-for="Evaluation" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ContentVal" class="control-label"></label>
+                            <input asp-for="ContentVal" class="form-control" id="ContentValID" />
+                            <span asp-validation-for="ContentVal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LayoutVal" class="control-label"></label>
+                            <input asp-for="LayoutVal" class="form-control" id="LayoutValID" />
+                            <span asp-validation-for="LayoutVal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StructureVal" class="control-label"></label>
+                            <input asp-for="StructureVal" class="form-control" id="StructureValID" />
+                            <span asp-validation-for="StructureVal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StyleVal" class="control-label"></label>
+                            <input asp-for="StyleVal" class="form-control" id="StyleValID" />
+                            <span asp-validation-for="StyleVal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LiteratureVal" class="control-label"></label>
+                            <input asp-for="LiteratureVal" class="form-control" id="LiteratureValID" />
+                            <span asp-validation-for="LiteratureVal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DifficultyVal" class="control-label"></label>
+                            <input asp-for="DifficultyVal" class="form-control" id="DifficultyValID" />
+                            <span asp-validation-for="DifficultyVal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NoveltyVal" class="control-label"></label>
+                            <input asp-for="NoveltyVal" class="form-control" id="NoveltyValID" />
+                            <span asp-validation-for="NoveltyVal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RichnessVal" class="control-label"></label>
+                            <input asp-for="RichnessVal" class="form-control" id="RichnessValID" />
+                            <span asp-validation-for="RichnessVal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ContentWt" class="control-label"></label>
+                            <input asp-for="ContentWt" class="form-control" id="ContentWtID" value="30" />
+                            <span asp-validation-for="ContentWt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LayoutWt" class="control-label"></label>
+                            <input asp-for="LayoutWt" class="form-control" id="LayoutWtID" value="15" />
+                            <span asp-validation-for="LayoutWt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StrucutreWt" class="control-label"></label>
+                            <input asp-for="StrucutreWt" class="form-control" id="StructureWtID" value="10" />
+                            <span asp-validation-for="StrucutreWt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StyleWt" class="control-label"></label>
+                            <input asp-for="StyleWt" class="form-control" id="StyleWtID" value="10" />
+                            <span asp-validation-for="StyleWt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LiteratureWt" class="control-label"></label>
+                            <input asp-for="LiteratureWt" class="form-control" id="LiteratureWtID" value="10" />
+                            <span asp-validation-for="LiteratureWt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DifficultyWt" class="control-label"></label>
+                            <input asp-for="DifficultyWt" class="form-control" id="DifficultyWtID" value="5" />
+                            <span asp-validation-for="DifficultyWt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NoveltyWt" class="control-label"></label>
+                            <input asp-for="NoveltyWt" class="form-control" id="NoveltyWtID" value="10" />
+                            <span asp-validation-for="NoveltyWt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RichnessWt" class="control-label"></label>
+                            <input asp-for="RichnessWt" class="form-control" id="RichnessWtID" value="10" />
+                            <span asp-validation-for="RichnessWt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="WeightSum" class="control-label"></label>
+                            <input asp-for="WeightSum" class="form-control" id="WtSum" readonly />
+                            <span asp-validation-for="WeightSum" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title btn">
+                        <a data-toggle="collapse" data-target="#Notenvorschlag">Gesamtnote</a>
+                    </div>
+                </div>
+                <div class="panel-collapse collapse" id="Notenvorschlag">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label">Notenvorschlag</label>
+                            <input class="form-control" id="notenvorschlag" readonly />
+                        </div>
+                        <div type="button" class="btn btn-primary" onclick="Berechnen()">Berechne</div>
+                        <div class="form-group">
+                            <label asp-for="Grade" class="control-label"></label>
+                            <select asp-for="Grade" class="form-control">
+                                <option value="" selected>Noch keine Note</option>
+                                <option value="1.0">1.0</option>
+                                <option value="1.3">1.3</option>
+                                <option value="1.7">1.7</option>
+                                <option value="2.0">2.0</option>
+                                <option value="2.3">2.3</option>
+                                <option value="2.7">2.7</option>
+                                <option value="3.0">3.0</option>
+                                <option value="3.3">3.3</option>
+                                <option value="3.7">3.7</option>
+                                <option value="4.0">4.0</option>
+                                <option value="5.0">5.0</option>
+                            </select>
+                            <span asp-validation-for="Grade" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="float:right">
+                <p><input type="submit" value="Speichern" class="btn btn-default" /></p>
+                <p><a asp-action="Index">Zurück zur Liste</a></p>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.common-bootstrap.core.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.bootstrap.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2018.3.1017/js/kendo.ui.core.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.1017/js/cultures/kendo.culture.de-DE.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#checkBtn').click(function () {
+                checked = $("input[type=checkbox]:checked").length;
+
+                if (checked < 1) {
+                    return false;
+                }
+
+            });
+
+
+
+            $("#date").kendoDatePicker({
+                culture: 'de-DE',
+                value: new Date()
+            });
+
+            $("#date2").kendoDatePicker({
+                culture: 'de-DE',
+                value: new Date()
+            });
+
+
+
+
+            var conwt = document.getElementById("ContentWtID");
+            var layoutwt = document.getElementById("LayoutWtID");
+            var structwt = document.getElementById("StructureWtID");
+            var stylewt = document.getElementById("StyleWtID");
+            var litwt = document.getElementById("LiteratureWtID");
+            var difwt = document.getElementById("DifficultyWtID");
+            var novwt = document.getElementById("NoveltyWtID");
+            var richwt = document.getElementById("RichnessWtID");
+            var weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+            document.getElementById("WtSum").value = weight;
+
+            conwt.addEventListener("change", function () {
+                weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+                document.getElementById("WtSum").value = weight;
+            });
+
+            layoutwt.addEventListener("change", function () {
+                weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+                document.getElementById("WtSum").value = weight;
+            });
+
+            structwt.addEventListener("change", function () {
+                weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+                document.getElementById("WtSum").value = weight;
+            });
+
+            stylewt.addEventListener("change", function () {
+                weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+                document.getElementById("WtSum").value = weight;
+            });
+
+            litwt.addEventListener("change", function () {
+                weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+                document.getElementById("WtSum").value = weight;
+            });
+
+            difwt.addEventListener("change", function () {
+                weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+                document.getElementById("WtSum").value = weight;
+            });
+
+            novwt.addEventListener("change", function () {
+                weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+                document.getElementById("WtSum").value = weight;
+            });
+
+            richwt.addEventListener("change", function () {
+                weight = Number(conwt.value) + Number(layoutwt.value) + Number(structwt.value) + Number(stylewt.value) + Number(litwt.value) + Number(difwt.value) + Number(novwt.value) + Number(richwt.value);
+                document.getElementById("WtSum").value = weight;
+            });
+
+
+        });
+    </script>
+}

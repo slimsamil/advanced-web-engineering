@@ -1,0 +1,25 @@
+﻿@model WebApplication7.Models.Programme
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@Model.Id">Ändern</a> |
+    <a asp-action="Index">Zurück zur Liste</a>
+</div>
