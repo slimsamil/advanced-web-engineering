@@ -6,52 +6,50 @@ using System.Threading.Tasks;
 
 namespace WebApplication7.Models
 {
-    
 
-        public enum Status
+
+    public enum Status
+    {
+        [Display(Name = "Frei")]
+        Frei = 0,
+        [Display(Name = "Vorgemerkt")]
+        Vorgemerkt = 1,
+        [Display(Name = "Angemeldet")]
+        Angemeldet = 2,
+        [Display(Name = "Abgegeben")]
+        Abgegeben = 3,
+        [Display(Name = "Bewertet")]
+        Bewertet = 4
+    }
+
+    //requiredif Funktionalität
+    public class RequiredIfAttribute : ValidationAttribute
+    {
+        private const string DefaultErrorMessageFormatString = "The {0} field is required.";
+        private readonly string[] _dependentProperties;
+
+        public RequiredIfAttribute(string[] dependentProperties)
         {
-            [Display(Name = "Frei")]
-            Frei = 0,
-            [Display(Name = "Vorgemerkt")]
-            Vorgemerkt = 1,
-            [Display(Name = "Angemeldet")]
-            Angemeldet = 2,
-            [Display(Name = "Abgegeben")]
-            Abgegeben = 3,
-            [Display(Name = "Bewertet")]
-            Bewertet = 4
+            _dependentProperties = dependentProperties;
+            ErrorMessage = DefaultErrorMessageFormatString;
         }
 
-        //requiredif Funktionalität
-        public class RequiredIfAttribute : ValidationAttribute
+        protected override ValidationResult IsValid(Object value, ValidationContext context)
         {
-            private const string DefaultErrorMessageFormatString = "The {0} field is required.";
-            private readonly string[] _dependentProperties;
+            Object instance = context.ObjectInstance;
+            Type type = instance.GetType();
 
-            public RequiredIfAttribute(string[] dependentProperties)
+            foreach (string s in _dependentProperties)
             {
-                _dependentProperties = dependentProperties;
-                ErrorMessage = DefaultErrorMessageFormatString;
-            }
-
-            protected override ValidationResult IsValid(Object value, ValidationContext context)
-            {
-                Object instance = context.ObjectInstance;
-                Type type = instance.GetType();
-
-                foreach (string s in _dependentProperties)
+                Object propertyValue = type.GetProperty(s).GetValue(instance, null);
+                if (propertyValue == null || value != null)
                 {
-                    Object propertyValue = type.GetProperty(s).GetValue(instance, null);
-                    if (propertyValue == null || value != null)
-                    {
-                        return ValidationResult.Success;
-                    }
+                    return ValidationResult.Success;
                 }
-                return new ValidationResult("Bitte " + context.DisplayName + " des Studenten angeben. ");
             }
+            return new ValidationResult("Bitte " + context.DisplayName + " des Studenten angeben. ");
         }
-
-
+    }
 
 
         //Deutsche Begriffe im Status
@@ -101,6 +99,7 @@ namespace WebApplication7.Models
 
             [Display(Name = "Betreuer/-in")]
             public int? SupervisorId { get; set; }
+
             public Supervisor Supervisor { get; set; }
 
             [Display(Name = "Bachelor")]
@@ -119,9 +118,9 @@ namespace WebApplication7.Models
             [Display(Name = "Matrikelnummer"), Range(1000000, 9999999, ErrorMessage = "Die Matrikelnummer muss 7-stellig sein."), RequiredIf(new String[] { "StudentName" })]
             public int? StudentId { get; set; }
 
-             [Display(Name = "Studiengang")]
-             public int? ProgrammeId { get; set; }
-    
+            [Display(Name = "Studiengang")]
+            public int? ProgrammeId { get; set; }
+
             [Display(Name = "Studiengang")]
             public Programme Programme { get; set; }
 
@@ -209,13 +208,12 @@ namespace WebApplication7.Models
             [Display(Name = "Zuletzt bearbeitet"), DataType(DataType.Date)]
             public DateTime? LastModified { get; set; }
 
-            public string PdfPath { get; set; }
-
             public string SupervisorEMail { get; set; }
 
-        public string SupervisorName{ get; set; }
+            public string SupervisorName { get; set; }
 
 
+        }
     }
-}
+
 

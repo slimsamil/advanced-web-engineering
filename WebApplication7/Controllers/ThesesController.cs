@@ -173,6 +173,10 @@ namespace WebApplication7.Controllers
             ViewData["ProgrammeId"] = new SelectList(_context.Programme, "Id", "Name", thesis.ProgrammeId);
             ViewData["SupervisorId"] = new SelectList(_context.Betreuer, "Id", "FullName", thesis.SupervisorId);
            
+            if(thesis.SupervisorId == null)
+            {
+
+            }
 
             if (ModelState.IsValid)
             {

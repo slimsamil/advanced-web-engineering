@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using WebApplication7.Areas.Identity.Data
+@inject SignInManager<ThesisDbUser> SignInManager
+@inject UserManager<ThesisDbUser> UserManager
+@{
     ViewData["Title"] = "FAQ";
 }
 <h2>@ViewData["Title"]</h2>
@@ -61,6 +65,23 @@
                 </div>
             </div>
         </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title btn">
+                        <a data-toggle="collapse" data-target="#Frage4">Wieso kann ich keinen Betreuer oder Studiengang löschen?</a>
+                    </div>
+                </div>
+                <div class="panel-collapse collapse" id="Frage4">
+                    <div class="panel-body">
+                        <p>Da die Betreuer und Studiengänge an die Thesen gebunden sind, wenden Sie sich bitte an den Admin um einen Betreuer aus dem System zu löschen.</p>
+                    </div>
+                </div>
+            </div>
+
+        }
+
         <p style="float: left">Sollten anderweitige Fehler auftreten, oder Sie weitere von uns nicht behandelte Fragen haben, so wenden Sie sich bitte an den <a href="mailto:samil-gencaslan@outlook.de">Admin (samil-gencaslan@outlook.de)</a>.</p>
     </div>
 

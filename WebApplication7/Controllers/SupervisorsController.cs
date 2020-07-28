@@ -148,6 +148,7 @@ namespace WebApplication7.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var supervisor = await _context.Betreuer.FindAsync(id);
+
             _context.Betreuer.Remove(supervisor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
